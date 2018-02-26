@@ -7,6 +7,7 @@ import mainHot from '@/components/display-page/main-hot'
 import four from '@/components/404'
 import mainPresell from '@/components/display-page/main-presell'
 import cinema from '@/components/display-page/cinema'
+import account from '@/components/display-page/account'
 
 Vue.use(Router)
 
@@ -23,6 +24,7 @@ export default new Router({
       ]
     },
     {path:'/404',component:four},
-    {path:'/cinema',component:cinema}
+    {path:'/cinema',component:cinema},
+    {path:'/account',component:account}
   ]
 })

@@ -3,17 +3,20 @@
     <tab-main></tab-main>
     <router-view></router-view>
     <city v-if="$store.state.cityOpen"></city>
+    <login v-if="$store.state.isShow"></login>
   </div>
 </template>
 
 <script>
+import login from '@/components/display-page/account-login'
 import tabMain from '@/components/tab/tab-main'
 import city from '@/components/display-page/city'
 export default {
   name: 'app',
   components:{
     tabMain,
-    city
+    city,
+    login
   }
 }
 </script>

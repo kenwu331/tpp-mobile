@@ -5,7 +5,8 @@ Vue.use(Vuex);
 const state={
     tabActive:0,
     city:'广州',
-    cityOpen:false
+    cityOpen:false,
+    isShow:true
 };
 const mutations={
     currentTab(state,n){
@@ -20,6 +21,9 @@ const mutations={
     },
     closeCity(state){
         state.cityOpen=false
+    },
+    closeAccount(state){
+        state.isShow=false
     }
 };
 
