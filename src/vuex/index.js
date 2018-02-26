@@ -17,6 +17,9 @@ const mutations={
     },
     cityOpen(state){
         state.cityOpen=true
+    },
+    closeCity(state){
+        state.cityOpen=false
     }
 };
 

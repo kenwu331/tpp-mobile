@@ -1,6 +1,6 @@
 <template>
     <div class="cityUl">
-        <h2>选择城市</h2>
+        <h2>选择城市<span class="x" @click="closeCity">X</span></h2>
         <mt-index-list>
             <mt-index-section index="B">
             <span @click="choiceCity('北京')"><mt-cell title="北京"></mt-cell></span>
@@ -20,6 +20,9 @@ export default {
     methods:{
         choiceCity(val){
             this.$store.commit('choiceCity',val)
+        },
+        closeCity(){
+            this.$store.commit('closeCity')
         }
     }
 }
@@ -36,5 +39,11 @@ export default {
     }
     .cityUl h2{
         text-align: center;
+    }
+    .cityUl .x{
+        float:right;
+        font-size: 5vmin;
+        font-weight: 300;
+        padding:1vmin 3vmin;
     }
 </style>
