@@ -11,6 +11,12 @@ export default {
     methods:{
         currentTab(){
             this.$store.commit('currentTab',this.i)
+            this.$router.push(this.routerLink[this.i])
+        }
+    },
+    data:function(){
+        return{
+            routerLink:['/main','/404','/404']
         }
     }
 }
