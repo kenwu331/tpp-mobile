@@ -22,7 +22,7 @@ export default {
 
 <style>
     .m-nowshowing{
-        width:92vmin;
+        width:100vmin;
     }
     .m-nowshowing::after{
         content:'已到底部';

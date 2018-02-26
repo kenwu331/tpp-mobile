@@ -5,7 +5,7 @@
             <div>{{$store.state.city}}</div>
             <div class="v"></div>
         </div>
-        <div class="nav-item">
+        <div class="nav-item" v-if="disable1!='guan'">
             <div class="item" :class="{'current':currentItem==index}" 
             :key="index" v-for="(val,index) in item" 
             @click="choiceNav(index)">{{val}}</div>
@@ -15,6 +15,7 @@
 
 <script>
 export default {
+    props:['disable1'],
     data:function(){
         return{
             item:['正在热映','即将上映'],

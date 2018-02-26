@@ -16,7 +16,7 @@ export default {
     },
     data:function(){
         return{
-            routerLink:['/main','/404','/404']
+            routerLink:['/main','/cinema','/404']
         }
     }
 }
