@@ -10,6 +10,7 @@ import cinema from '@/components/display-page/cinema/cinema'
 import account from '@/components/display-page/account/account'
 import accountUnlisted from '@/components/display-page/account/account-unlisted'
 import accountListed from '@/components/display-page/account/account-listed'
+import cinemaChoice from '@/components/display-page/cinema/cinema-choice'
 
 Vue.use(Router)
 
@@ -30,6 +31,7 @@ export default new Router({
     {path:'/account',name:'account',component:account,children:[
       {path:'/account/',component:accountUnlisted},
       {path:'/account/listed',component:accountListed}
-    ]}
+    ]},
+    {path:'/cinemaChoice',component:cinemaChoice}
   ]
 })

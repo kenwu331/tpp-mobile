@@ -1,5 +1,5 @@
 <template>
-    <div class="cinema-item">
+    <div class="cinema-item" @click="cinemaChoice">
         <div>
             <span class="title">{{title}}</span>
             <span class="price">{{price}}<span>元起</span></span>
@@ -16,7 +16,12 @@
 
 <script>
 export default {
-    props:['title','price','address','ps','hui']
+    props:['title','price','address','ps','hui'],
+    methods:{
+        cinemaChoice(){
+            this.$router.push('/cinemaChoice')
+        }
+    }
 }
 </script>
 
@@ -25,7 +30,7 @@ export default {
         padding:4vmin;
         width:92vmin;
         height:21vmin;
-        font-size:2vmin;
+        font-size:0.5rem;
         color:#999;
     }
     .cinema-item>div{
@@ -37,7 +42,7 @@ export default {
         font-size:1rem;
     }
     .cinema-item .price{
-        font-size:2vmin;
+        font-size:0.5rem;
         color:#ff4d64;
     }
     .cinema-item .price>span{
