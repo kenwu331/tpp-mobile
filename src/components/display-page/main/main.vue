@@ -10,6 +10,9 @@ import navMain from '@/components/nav/nav-main'
 export default {
     components:{
         navMain
+    },
+    created:function(){
+        this.$store.commit('currentTab',0)
     }
 }
 </script>

@@ -4,19 +4,22 @@
     <router-view></router-view>
     <city v-if="$store.state.cityOpen"></city>
     <login v-if="$store.state.isShow"></login>
+    <register v-if="$store.state.isRegisterShow"></register>
   </div>
 </template>
 
 <script>
-import login from '@/components/display-page/account-login'
+import register from '@/components/display-page/account/account-register'
+import login from '@/components/display-page/account/account-login'
 import tabMain from '@/components/tab/tab-main'
-import city from '@/components/display-page/city'
+import city from '@/components/display-page/main/city'
 export default {
   name: 'app',
   components:{
     tabMain,
     city,
-    login
+    login,
+    register
   }
 }
 </script>

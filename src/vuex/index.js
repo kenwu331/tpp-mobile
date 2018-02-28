@@ -6,7 +6,9 @@ const state={
     tabActive:0,
     city:'广州',
     cityOpen:false,
-    isShow:true
+    isShow:false,
+    isRegisterShow:false,
+    isLogin:false
 };
 const mutations={
     currentTab(state,n){
@@ -22,8 +24,11 @@ const mutations={
     closeCity(state){
         state.cityOpen=false
     },
-    closeAccount(state){
-        state.isShow=false
+    loginState(state){
+        state.isShow=!state.isShow
+    },
+    registerState(state){
+        state.isRegisterShow=!state.isRegisterShow
     }
 };
 

@@ -7,13 +7,14 @@ import store from './vuex'
 // import MintUI from 'mint-ui'
 // import 'mint-ui/lib/style.css'
 // Vue.use(MintUI)
-import {Button,Swipe,SwipeItem,IndexList,IndexSection,Cell} from 'mint-ui'
+import {Button,Swipe,SwipeItem,IndexList,IndexSection,Cell,Field} from 'mint-ui'
 Vue.component(Button.name,Button);
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
 Vue.component(IndexList.name, IndexList);
 Vue.component(IndexSection.name, IndexSection);
 Vue.component(Cell.name, Cell);
+Vue.component(Field.name, Field);
 
 Vue.config.productionTip = false
 
