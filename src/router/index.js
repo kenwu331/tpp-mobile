@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
+import VueResource from 'vue-resource'
 import first from '@/components/1'
 import main from '@/components/display-page/main/main'
 import mainHot from '@/components/display-page/main/main-hot'
@@ -12,6 +13,7 @@ import accountUnlisted from '@/components/display-page/account/account-unlisted'
 import accountListed from '@/components/display-page/account/account-listed'
 import cinemaChoice from '@/components/display-page/cinema/cinema-choice'
 
+Vue.use(VueResource)
 Vue.use(Router)
 
 export default new Router({
