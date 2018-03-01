@@ -25,7 +25,8 @@ export default {
     },
     methods:{
         choiceNav(i){
-            this.currentItem=i
+            this.currentItem=i;
+            document.body.scrollTop=0;
             this.$router.push(this.itemRouter[i])
         },
         cityOpen(){

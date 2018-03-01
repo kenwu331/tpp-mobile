@@ -19,6 +19,8 @@ export default {
     props:['title','price','address','ps','hui'],
     methods:{
         cinemaChoice(){
+            document.body.scrollTop=0;
+            this.$store.commit('cinemaMsg',[this.title,this.address,this.ps]);
             this.$router.push('/cinemaChoice')
         }
     }

@@ -10,6 +10,7 @@ export default {
     props:['img','fontcolor','txt','i'],
     methods:{
         currentTab(){
+            document.body.scrollTop=0;
             this.$store.commit('currentTab',this.i)
             this.$router.push(this.routerLink[this.i])
         }

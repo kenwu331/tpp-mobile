@@ -19,16 +19,19 @@
           <div></div>
       </div>
       <div class="m-item-button">
-          <div class="button" :class="txtBtn=='购票'?'pink':'blue'">{{txtBtn}}</div>
+          <div class="button" :class="txtBtn=='购票'?'pink':'blue'" @click="choiceMoive">{{txtBtn}}</div>
       </div>
   </div>
 </template>
 
 <script>
 export default {
-    props:['pic','txtTitle','threeD','IMAX','scorePic','score','txtDY','txtZY','txtBtn'],
-    data:function(){
-        return{
+    props:['pic','txtTitle','threeD','IMAX','scorePic','score','txtDY','txtZY','txtBtn','long','i'],
+    methods:{
+        choiceMoive(){
+            document.body.scrollTop=0;
+            this.$store.commit('moiveMsg',[this.txtTitle,this.score,this.long,this.i]);
+            this.$router.push('/cinemaChoice');
         }
     }
 }

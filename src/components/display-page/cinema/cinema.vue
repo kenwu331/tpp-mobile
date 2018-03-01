@@ -23,6 +23,7 @@ export default {
     },
     created:function(){
         this.$store.commit('currentTab',1)
+        if(this.$store.state.moiveMsg=='') this.$router.push('main')
     }
 }
 </script>

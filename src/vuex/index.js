@@ -8,7 +8,10 @@ const state={
     cityOpen:false,
     isShow:false,
     isRegisterShow:false,
-    isLogin:false
+    isLogin:false,
+    choiceCinema:'',
+    choiceMoive:['红海行动','9.3','138分钟 | 动作 | 张译 黄景瑜 海清',0],
+    moiveMsg:''
 };
 const mutations={
     currentTab(state,n){
@@ -29,6 +32,15 @@ const mutations={
     },
     registerState(state){
         state.isRegisterShow=!state.isRegisterShow
+    },
+    cinemaMsg(state,n){
+        state.choiceCinema=n
+    },
+    moiveMsg(state,n){
+        state.choiceMoive=n
+    },
+    allMoiveMsg(state,n){
+        state.moiveMsg=n
     }
 };
 

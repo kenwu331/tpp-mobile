@@ -22,12 +22,6 @@
                 imgurl2:['./../../../static/img/tab1_red.png','./../../../static/img/tab2_red.png','./../../../static/img/tab2_red.png'],
                 txt:['热映','影院','我的']    
             }
-        },
-        methods:{
-            current(i){
-                console.log("asd");
-                this.$store.commit("currentTab",i);  
-            }
         }
     }
 </script>

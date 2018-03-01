@@ -2,14 +2,19 @@
     <div style="width:100%">
         <div class="empty"></div>
         <div class="cinema-choice">
-            <div class="cinema-msg">
-                <div class="cinema-title">华影星美国际影城</div>
-                <div class="cinema-address">荔湾区环市西路133号华南影都D区二楼</div>
+            <div class="cinema-msg" v-if="cinema!=''">
+                <div class="cinema-title">{{this.$store.state.choiceCinema[0]}}</div>
+                <div class="cinema-address">{{this.$store.state.choiceCinema[1]}}</div>
                 <div class="cinema-ps">
-                    <div>退票</div>
-                    <div>退票</div>
+                    <div :key="index" v-for="(val,index) in this.$store.state.choiceCinema[2]">{{val}}</div>
                 </div>
-                <div class="rechoice">重选</div>
+                <router-link to="/cinema"><div class="rechoice">重选</div></router-link>
+            </div>
+            <div class="cinema-msg" v-if="cinema==''">
+                <div>
+                    <h1 style="padding:5vmin">您还未选择影院</h1>
+                </div>
+                <router-link to="/cinema"><div class="rechoice">去选影院</div></router-link>
             </div>
             <div class="cinema-hui">
                 光大银行卡新春活动 满11减10元
@@ -17,39 +22,42 @@
             </div>
             <div class="movie" id="movieLeft" @touchend="moveConfirm">
                 <div class="movie-item">
-                    <div class="current"><img src="./../../../../static/img/m-item/m-item1.jpg" width="100%"></div>
-                    <div><img src="./../../../../static/img/m-item/m-item2.jpg" width="100%"></div>
-                    <div><img src="./../../../../static/img/m-item/m-item3.jpg" width="100%"></div>
-                    <div><img src="./../../../../static/img/m-item/m-item4.jpg" width="100%"></div>
-                    <div><img src="./../../../../static/img/m-item/m-item5.jpg" width="100%"></div>
-                    <div><img src="./../../../../static/img/m-item/m-item6.jpg" width="100%"></div>
-                    <div><img src="./../../../../static/img/m-item/m-item7.jpg" width="100%"></div>
-                    <div><img src="./../../../../static/img/m-item/m-item8.jpg" width="100%"></div>
+                    <div :key="index" v-for="(val,index) in moviePic" :class="{'current':movieCurrent==index}" @click="choicePic(index)">
+                        <img :src="val" width="100%">
+                    </div>
                     <div ref="MIW"></div>
                 </div>
             </div>
             <div class="movie-msg">
-                <div class="title">红海行动<span class="score">9.3分</span></div>
-                <div>138分钟 | 动作 | 张译 黄景瑜 海清</div>
+                <div class="title">{{movieMsg[movieCurrent][0]}}<span class="score">{{movieMsg[movieCurrent][1]}}分</span></div>
+                <div>{{movieMsg[movieCurrent][2]}}</div>
             </div>
             <div class="movie-date">
                 <div class="current">今天03-01</div>
                 <div>明天03-02</div>
             </div>
-            <div class="movie-time" :key="index" v-for="index in gg">
-                <div class="time">
-                    <div class="time-start">20:40</div>
-                    <div class="ps">22:58散场</div>
+            <div v-if="cinema!=''">
+                <div class="movie-time" :key="index" v-for="(val,index) in time[this.movieCurrent]">
+                    <div class="time">
+                        <div class="time-start">{{val[0]}}</div>
+                        <div class="ps">{{val[1]}}</div>
+                    </div>
+                    <div class="place">
+                        <div class="place-type">{{val[2]}}</div>
+                        <div class="ps">{{val[3]}}</div>
+                    </div>
+                    <div class="buy-btn">购票</div>
+                    <div class="price">
+                        <div class="price-hui">{{val[4]}}<span>元</span></div>
+                        <div class="ps">{{val[5]}}元<div></div></div>
+                    </div>
                 </div>
-                <div class="place">
-                    <div class="place-type">国语 3D</div>
-                    <div class="ps">2号厅</div>
+            </div>
+            <div class="cinema-msg" v-if="cinema==''">
+                <div>
+                    <h1 style="padding:5vmin">您还未选择影院</h1>
                 </div>
-                <div class="buy-btn">购票</div>
-                <div class="price">
-                    <div class="price-hui">36<span>元</span></div>
-                    <div class="ps">70元<div></div></div>
-                </div>
+                <router-link to="/cinema"><div class="rechoice">去选影院</div></router-link>
             </div>
         </div>
     </div>
@@ -59,27 +67,52 @@
 export default {
     data:function(){
         return{
-            gg:[1,2,3,4,5,6,7,8]
+            gg:[1,2,3,4,5,6,7,8],
+            moviePic:['./../../../../static/img/m-item/m-item1.jpg','./../../../../static/img/m-item/m-item2.jpg','./../../../../static/img/m-item/m-item3.jpg','./../../../../static/img/m-item/m-item4.jpg','./../../../../static/img/m-item/m-item5.jpg','./../../../../static/img/m-item/m-item6.jpg','./../../../../static/img/m-item/m-item7.jpg','./../../../../static/img/m-item/m-item8.jpg'],
+            movieCurrent:0,
+            cinema:'',
+            movieMsg:'',
+            time:[[['10:00','12:18','国语 3D','2号厅',36,70],['11:00','13:18','国语 3D IMAX','1号厅',39,70],['15:00','17:18','国语 3D','5号厅',42,70]],
+            [['11:00','12:18','国语 3D','2号厅',32,70],['12:10','13:18','国语 3D IMAX','1号厅',35,70],['14:00','17:18','国语 3D','5号厅',40,70]],
+            [['13:00','12:18','国语 3D','2号厅',33,70],['14:30','13:18','国语 3D IMAX','1号厅',33,70],['16:00','17:18','国语 3D','5号厅',41,70]],
+            [['15:00','12:18','国语 3D','2号厅',34,70],['16:40','13:18','国语 3D IMAX','1号厅',34,70],['18:00','17:18','国语 3D','5号厅',43,70]],
+            [['17:00','12:18','国语 3D','2号厅',31,70],['18:20','13:18','国语 3D IMAX','1号厅',36,70],['19:00','17:18','国语 3D','5号厅',40,70]],
+            [['19:00','12:18','国语 3D','2号厅',33,70],['13:20','13:18','国语 3D IMAX','1号厅',37,70],['21:00','17:18','国语 3D','5号厅',41,70]],
+            [['12:00','12:18','国语 3D','2号厅',35,70],['15:10','13:18','国语 3D IMAX','1号厅',32,70],['22:00','17:18','国语 3D','5号厅',44,70]],
+            [['14:00','12:18','国语 3D','2号厅',36,70],['17:30','13:18','国语 3D IMAX','1号厅',35,70],['23:00','17:18','国语 3D','5号厅',45,70]]]
         }
     },
     mounted () {
         movieLeft.addEventListener('scroll', this.ML);
+        this.moveConfirm();
     },
     methods:{
         ML(){
-            var scrollLeft = movieLeft.pageXOffset || movieLeft.scrollLeft
+            let scrollLeft = movieLeft.pageXOffset || movieLeft.scrollLeft;
+            let mw=1.294*this.$refs.MIW.offsetWidth;
+            let nowMwCount=parseInt((scrollLeft-0.5*mw)/mw)+1;
+            if(scrollLeft-0.5*mw<0) nowMwCount=0;
+            nowMwCount>7?nowMwCount=7:true;
+            this.movieCurrent=nowMwCount;
         },
         moveConfirm(){
-            var scrollLeft = movieLeft.pageXOffset || movieLeft.scrollLeft
-            // console.log(scrollLeft);
-            var mw=1.294*this.$refs.MIW.offsetWidth;
-            var nowMwCount=parseInt((scrollLeft-0.5*mw)/mw);
-            nowMwCount>7?nowMwCount=7:true;
-            nowMwCount>=0?movieLeft.scrollLeft=nowMwCount*mw:movieLeft.scrollLeft=0
-            
+            let mw=1.294*this.$refs.MIW.offsetWidth;
+            this.movieCurrent>0?movieLeft.scrollLeft=this.movieCurrent*mw:movieLeft.scrollLeft=0   
+        },
+        choicePic(i){
+            this.moiveCurrent=i;
+            // this.$options.methods.moveConfirm();此处不适合复用
+            let mw=1.294*this.$refs.MIW.offsetWidth;
+            i>0?movieLeft.scrollLeft=i*mw:movieLeft.scrollLeft=0
         }
-    }
-  
+    },
+    created:function(){
+            this.cinema=this.$store.state.choiceCinema;
+            this.movieMsg=this.$store.state.choiceMoive;
+            this.movieCurrent=this.movieMsg[3];
+            this.movieMsg=this.$store.state.moiveMsg;
+            if(this.$store.state.moiveMsg=='') this.$router.push('main')
+        }
 }
 </script>
 
@@ -117,6 +150,12 @@ export default {
         margin-bottom: .5625rem;
         font-weight: 700;
         color: #222;
+    }
+    .cinema-msg .cinema-address{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width:72vmin;
     }
     .cinema-msg .cinema-ps>div{
         float: left;
@@ -172,7 +211,7 @@ export default {
         overflow-x:scroll;
     }
     .movie-item{
-        width:250vmin;
+        width:220vmin;
         height:33vmin;
         background:#999;
         padding-left:39vmin
