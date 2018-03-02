@@ -20,6 +20,6 @@
 		if($user===null){
 			echo '用户名或密码有误';
 		}else{
-			echo '登录成功';
+			echo json_encode($user,JSON_UNESCAPED_UNICODE);
 		}
 	}

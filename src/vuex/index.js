@@ -9,6 +9,7 @@ const state={
     isShow:false,
     isRegisterShow:false,
     isLogin:false,
+    accountMsg:[],
     choiceCinema:'',
     choiceMoive:['红海行动','9.3','138分钟 | 动作 | 张译 黄景瑜 海清',0],
     moiveMsg:''
@@ -41,6 +42,12 @@ const mutations={
     },
     allMoiveMsg(state,n){
         state.moiveMsg=n
+    },
+    accountMsg(state,n){
+        state.accountMsg=n
+    },
+    isLogin(state,n){
+        state.isLogin=n
     }
 };
 

@@ -4,7 +4,7 @@
             <mt-cell title="您需要登录才能继续访问"><span @click="closeit">关闭</span></mt-cell>
             <div class="login-logo"></div>
             <div class="msg">
-                <mt-field label="用户名" placeholder="手机号/邮箱/会员名" v-model="username"></mt-field>
+                <mt-field label="用户名" placeholder="手机号/邮箱/会员名" v-model="uname"></mt-field>
                 <mt-field label="密码" type="password" placeholder="请输入密码" v-model="upwd"></mt-field>
             </div>
             <div class="login account-button" @click="login">登 录</div>
@@ -20,14 +20,25 @@ export default {
             this.$store.commit('loginState')
         },
         login(){
-            this.$http.post('http://localhost/php/login.php',{uname:this.username,upwd:this.upwd},{emulateJSON: true}).then(function(res){console.log(res)})
-            this.username='';
-            this.upwd='';
+            var _this=this;
+            this.uname==''||this.upwd==''?console.log("空"):
+            this.$http.post('http://localhost/php/login.php',{uname:this.uname,upwd:this.upwd},{emulateJSON: true}).then(function(res){
+                // console.log(res.data["user_name"])
+                if(res.data["uname"]!=""){
+                    _this.$store.commit('accountMsg',res.data)
+                    // console.log(_this.$store.state.accountMsg["uname"])
+                    _this.$store.commit('isLogin',true)
+                    console.log(_this.$store.state.isLogin)
+                    _this.$store.commit('loginState')
+                }
+            })
+            // this.username='';
+            // this.upwd='';
         }
     },
     data:function(){
         return{
-            username:'',
+            uname:'',
             upwd:''
         }
     }
