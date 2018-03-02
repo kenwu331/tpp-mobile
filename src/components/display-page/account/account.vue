@@ -21,7 +21,7 @@ export default {
                 Indicator.close();   
             }, 500);     
     }else{
-      this.$http.post('http://127.0.0.1:80/php/islogin.php',{uname:"asd",upwd:"dsa"},{ credentials: true,emulateJSON: true })
+      this.$http.post('http://127.0.0.1/php/islogin.php',{uname:"asd",upwd:"dsa"},{ credentials: true,emulateJSON: true })
       .then(function(res){
         if(res.data["uname"]==''){
           _this.$router.push('/account/');

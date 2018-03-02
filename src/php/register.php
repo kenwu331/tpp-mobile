@@ -1,6 +1,7 @@
 <?php
     header('Access-Control-Allow-Credentials:true');
-	header('Access-Control-Allow-Origin:http://localhost:8080');
+	//header('Access-Control-Allow-Origin:http://localhost:8080');dev环境
+	header('Access-Control-Allow-Origin:http://localhost');
 	$conn=mysqli_connect("127.0.0.1","root","","tpp",3306);
     $sql="SET NAMES UTF8";
     mysqli_query($conn,$sql);
@@ -15,6 +16,9 @@
 			echo json_encode(Array("uname"=>"用户已存在"));
 		}else{//否则
             $sql="INSERT INTO tpp_user VALUES(NULL,'$uname','$upwd','$user_name');";
+			mysqli_query($conn,$sql);
+			session_start();//打开session
+			$_SESSION["uname"]=$uname;
             echo json_encode(Array("uname"=>$uname,"upwd"=>$upwd,"user_name"=>$user_name));
         }
 	}
