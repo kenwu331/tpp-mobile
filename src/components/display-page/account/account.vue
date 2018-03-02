@@ -5,22 +5,36 @@
 </template>
 
 <script>
+import { Indicator } from 'mint-ui';
 export default {
   created:function(){
+    Indicator.open({
+      text: '加载钟...',
+      spinnerType: 'double-bounce'
+    });
+    var _this=this;
     this.$store.commit('currentTab',2);
-    // var _this=this;
     if(this.$store.state.isLogin==true){
+      console.log(this.$store.state.accountMsg)
       this.$router.push('/account/listed')
+      setTimeout(() => {  
+                Indicator.close();   
+            }, 500);     
     }else{
-      this.$router.push('/account/');
-      this.$http.post('http://localhost/php/islogin.php',{},{emulateJSON: true})
+      this.$http.post('http://127.0.0.1:80/php/islogin.php',{uname:"asd",upwd:"dsa"},{ credentials: true,emulateJSON: true })
       .then(function(res){
-        // console.log(res.data["uname"])
         if(res.data["uname"]==''){
-          console.log("未登录")
+          _this.$router.push('/account/');
+          setTimeout(() => {  
+                Indicator.close();   
+            }, 500); 
         }else{
-          // this.$store.commit('loginState')
-          this.$router.push('/account/listed')
+          _this.$store.commit('isLogin',true)
+          _this.$store.commit('accountMsg',res.data)
+          _this.$router.push('/account/listed')
+          setTimeout(() => {  
+                Indicator.close();   
+            }, 500); 
         }
       })
     } 

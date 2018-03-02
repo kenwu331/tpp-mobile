@@ -1,25 +1,23 @@
 <?php
-    header('Access-Control-Allow-Origin:*');
-	@$un=$_REQUEST['uname'];
-	if($un===null || $un===""){
-			die('uname错');
-	}
-	@$uw=$_REQUEST['upwd'];
-	if($uw===null || $uw===""){
-			die('upwd错');
-	}
-	require('init.php');
-	$sql="SELECT * FROM tpp_user WHERE uname='$un' and upwd='$uw'";
-	$result= mysqli_query($conn,$sql);
-	if($result===false){
-		echo '输出出错<br>';
-		echo "请查看代码：$sql";
-	}else{
-		echo '代码执行成功<br>';
-		$user= mysqli_fetch_assoc($result);
-		if($user===null){
-			echo '用户名或密码有误';
-		}else{
-			echo json_encode($user,JSON_UNESCAPED_UNICODE);
-		}
+    header('Access-Control-Allow-Credentials:true');
+	header('Access-Control-Allow-Origin:http://localhost:8080');
+	$conn=mysqli_connect("127.0.0.1","root","","tpp",3306);
+    $sql="SET NAMES UTF8";
+    mysqli_query($conn,$sql);
+	//从request中获得uname和upwd
+	@$uname=$_REQUEST["uname"];
+	@$upwd=$_REQUEST["upwd"];
+	if($uname&&$upwd){
+		//定义SQL语句: select 
+		$sql="select * from tpp_user where uname='$uname' and upwd='$upwd'";
+		$result=mysqli_query($conn,$sql);//执行查询
+		//获得查询结果
+		$user=mysqli_fetch_all($result,1);
+		if(count($user)!=0){//如果有结果
+			session_start();//打开session
+			$_SESSION["uname"]=$user[0]["uname"];
+			
+			echo json_encode($user[0]);
+		}else//否则
+			echo json_encode(Array("uname"=>""));//登录失败
 	}

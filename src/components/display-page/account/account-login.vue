@@ -8,32 +8,56 @@
                 <mt-field label="密码" type="password" placeholder="请输入密码" v-model="upwd"></mt-field>
             </div>
             <div class="login account-button" @click="login">登 录</div>
-            <div class="register account-button">注 册</div>
+            <div class="register account-button" @click="gotoregister">注 册</div>
         </div>
     </transition>
 </template>
 
 <script>
+import { Toast,Indicator } from 'mint-ui';
 export default {
     methods:{
         closeit(){
             this.$store.commit('loginState')
         },
+        gotoregister(){
+            this.$store.commit('loginState')
+            this.$store.commit('registerState')
+        },
+        instance(msg){ 
+            Toast({
+                message: msg,
+                iconClass: 'icon icon-success',
+                position: 'middle',
+                duration: 1500
+            });
+        },
         login(){
             var _this=this;
-            this.uname==''||this.upwd==''?console.log("空"):
-            this.$http.post('http://localhost/php/login.php',{uname:this.uname,upwd:this.upwd},{emulateJSON: true}).then(function(res){
-                // console.log(res.data["user_name"])
-                if(res.data["uname"]!=""){
-                    _this.$store.commit('accountMsg',res.data)
-                    // console.log(_this.$store.state.accountMsg["uname"])
-                    _this.$store.commit('isLogin',true)
-                    console.log(_this.$store.state.isLogin)
-                    _this.$store.commit('loginState')
-                }
-            })
-            // this.username='';
-            // this.upwd='';
+            if(this.uname==''||this.upwd==''){this.instance("用户名或密码不能为空")}
+            else{
+                Indicator.open({
+                    text: '加载钟...',
+                    spinnerType: 'fading-circle'
+                });
+                this.$http.post('http://127.0.0.1/php/login.php',{uname:this.uname,upwd:this.upwd},{credentials: true,emulateJSON: true}).then(function(res){
+                    setTimeout(() => {  
+                        Indicator.close();   
+                    }, 100); 
+                    if(res.data["uname"]!=""){
+                        _this.instance("登录成功!")
+                        _this.$store.commit('accountMsg',res.data)
+                        // console.log(_this.$store.state.accountMsg["uname"])
+                        _this.$store.commit('isLogin',true)
+                        console.log(_this.$store.state.isLogin)
+                        _this.$store.commit('loginState')
+                        _this.$router.push('/account/listed')
+                    }else{
+                        _this.instance("密码错误或用户不存在!")
+                        this.upwd='';
+                    }
+                })
+            }            
         }
     },
     data:function(){
@@ -52,7 +76,7 @@ export default {
         background:#fff;
         position:fixed;
         top:0;
-        z-index:999;
+        /* z-index:999; */
     }
     .login-logo{
         width:22vmin;
