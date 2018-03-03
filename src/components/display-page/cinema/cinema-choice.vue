@@ -46,7 +46,7 @@
                         <div class="place-type">{{val[2]}}</div>
                         <div class="ps">{{val[3]}}</div>
                     </div>
-                    <div class="buy-btn">购票</div>
+                    <div class="buy-btn" @click="buy([val[0],val[2],val[3],val[4]])">购票</div>
                     <div class="price">
                         <div class="price-hui">{{val[4]}}<span>元</span></div>
                         <div class="ps">{{val[5]}}元<div></div></div>
@@ -104,6 +104,10 @@ export default {
             // this.$options.methods.moveConfirm();此处不适合复用
             let mw=1.294*this.$refs.MIW.offsetWidth;
             i>0?movieLeft.scrollLeft=i*mw:movieLeft.scrollLeft=0
+        },
+        buy(msg){
+            this.$store.commit('choiceTime',msg);
+            this.$router.push('/cinemaMovie')
         }
     },
     created:function(){

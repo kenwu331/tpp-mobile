@@ -12,6 +12,7 @@ import account from '@/components/display-page/account/account'
 import accountUnlisted from '@/components/display-page/account/account-unlisted'
 import accountListed from '@/components/display-page/account/account-listed'
 import cinemaChoice from '@/components/display-page/cinema/cinema-choice'
+import cinemaMovie from '@/components/display-page/cinema/cinema-movie'
 
 Vue.use(VueResource)
 Vue.use(Router)
@@ -34,6 +35,7 @@ export default new Router({
       {path:'/account/',component:accountUnlisted},
       {path:'/account/listed',component:accountListed}
     ]},
-    {path:'/cinemaChoice',component:cinemaChoice}
+    {path:'/cinemaChoice',component:cinemaChoice},
+    {path:'/cinemaMovie',component:cinemaMovie}
   ]
 })
