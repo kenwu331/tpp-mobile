@@ -21,11 +21,7 @@
             <div class="seat-place">{{$store.state.choiceTime[2]}}</div>
             <div class="seat-state">
                 <div class="row">
-                    <div class="row-num">1</div>
-                    <div class="row-num">2</div>
-                    <div class="row-num">3</div>
-                    <div class="row-num">4</div>
-                    <div class="row-num">5</div>
+                    <div class="row-num" :key="index" v-for="(val,index) in rowNum">{{val}}</div>
                 </div>
                 <div class="seat-view" ref="vw" id="sv">
                     <div class="seat-main">
@@ -35,6 +31,16 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <mt-button size="large" type="danger" class="seat-confirm">确认选座</mt-button>
+        <div class="seat-price">
+            <div class="phone">
+                <p class="phone-msg">购票成功后将发送取票码到</p>
+                <p class="phone-num">15820258055</p>
+            </div>
+            <div class="price">
+                <p>票价 <span>35.9元</span></p>
             </div>
         </div>
     </div>
@@ -78,7 +84,8 @@ export default {
         return{
             icon:[[0,0,1,2,3,4,5,6],[0,1,2,3,4,5,6,7],[0,1,2,3,4,5,6,7],[0,1,2,3,4,5,6,7],[1,2,3,4,5,6,7,8]],
             ik:[],
-            is:[]
+            is:[],
+            rowNum:[1,2,3,4,5]
         }
     }
     
@@ -185,6 +192,7 @@ export default {
         height:39vh;
         border-radius:10px;
         overflow: hidden;
+        z-index: 10;
     }
     .seat .seat-state .row .row-num{
         height:5vh;
@@ -224,5 +232,52 @@ export default {
     .seat .seat-state .seat-view .row-icon .icon-selected{
         background:#70C972;
         color:#fff;
+    }
+    .seat-confirm{
+        position: fixed;
+        bottom:0;
+    }
+    .seat-price{
+        position: fixed;
+        bottom:10vmin;
+        box-sizing: border-box;
+        border-top:.3vmin #DDDDDD solid;
+        width:100%;
+        height:16vmin;
+        padding:4vmin;
+    }
+    .seat-price .phone-msg{
+        font-size: .625rem;
+        height:5vmin;
+        line-height: 5vmin;
+        color: #999;
+        width:50vmin;
+    }
+    .seat-price .phone-num{
+        font-size: 1.125rem;
+        height:15vmin;
+        line-height: 6vmin;
+        color: #666;
+        width:50vmin;
+    }
+    .seat-price .phone{
+        float: left;
+        height: 20vmin;
+        width:50vmin;
+        padding-left: 5vmin;
+    }
+    .seat-price .price{
+        float: right;
+        line-height: 10vmin;
+        width:30vmin;
+        text-align: right;
+        color: #8a869e;
+        font-weight: 400;
+        font-size: .75rem;
+    }
+    .seat-price .price span{
+        color: #ff4d64;
+        font-size: 1.125rem;
+        font-weight: bold;
     }
 </style>
