@@ -40,7 +40,7 @@ export default {
                     text: '加载钟...',
                     spinnerType: 'fading-circle'
                 });
-                this.$http.post('http://127.0.0.1/php/login.php',{uname:this.uname,upwd:this.upwd},{credentials: true,emulateJSON: true}).then(function(res){
+                this.$http.post('http://localhost/php/login.php',{uname:this.uname,upwd:this.upwd},{credentials: true,emulateJSON: true}).then(function(res){
                     setTimeout(() => {  
                         Indicator.close();   
                     }, 100); 
@@ -49,7 +49,8 @@ export default {
                         _this.$store.commit('accountMsg',res.data)
                         // console.log(_this.$store.state.accountMsg["uname"])
                         _this.$store.commit('isLogin',true)
-                        console.log(_this.$store.state.isLogin)
+                        console.log(res.data)
+                        console.log(res)
                         _this.$store.commit('loginState')
                         _this.$router.push('/account/listed')
                     }else{

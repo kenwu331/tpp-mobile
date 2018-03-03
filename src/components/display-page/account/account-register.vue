@@ -40,7 +40,7 @@ export default {
                 text: '加载钟...',
                 spinnerType: 'fading-circle'
             }),
-            this.$http.post('http://127.0.0.1/php/register.php',{uname:this.uname,upwd:this.upwd,user_name:this.user_name},{credentials: true,emulateJSON: true})
+            this.$http.post('http://localhost/php/register.php',{uname:this.uname,upwd:this.upwd,user_name:this.user_name},{credentials: true,emulateJSON: true})
             .then(function(res){
                 setTimeout(() => {  
                     Indicator.close();   
