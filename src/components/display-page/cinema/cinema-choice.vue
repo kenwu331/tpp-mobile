@@ -77,7 +77,7 @@ export default {
             [['13:00','12:18','国语 3D','2号厅',33,70],['14:30','13:18','国语 3D IMAX','1号厅',33,70],['16:00','17:18','国语 3D','5号厅',41,70]],
             [['15:00','12:18','国语 3D','2号厅',34,70],['16:40','13:18','国语 3D IMAX','1号厅',34,70],['18:00','17:18','国语 3D','5号厅',43,70]],
             [['17:00','12:18','国语 3D','2号厅',31,70],['18:20','13:18','国语 3D IMAX','1号厅',36,70],['19:00','17:18','国语 3D','5号厅',40,70]],
-            [['19:00','12:18','国语 3D','2号厅',33,70],['13:20','13:18','国语 3D IMAX','1号厅',37,70],['21:00','17:18','国语 3D','5号厅',41,70]],
+            [['13:20','12:18','国语 3D','2号厅',33,70],['19:00','13:18','国语 3D IMAX','1号厅',37,70],['21:00','17:18','国语 3D','5号厅',41,70]],
             [['12:00','12:18','国语 3D','2号厅',35,70],['15:10','13:18','国语 3D IMAX','1号厅',32,70],['22:00','17:18','国语 3D','5号厅',44,70]],
             [['14:00','12:18','国语 3D','2号厅',36,70],['17:30','13:18','国语 3D IMAX','1号厅',35,70],['23:00','17:18','国语 3D','5号厅',45,70]]]
         }
@@ -94,16 +94,22 @@ export default {
             if(scrollLeft-0.5*mw<0) nowMwCount=0;
             nowMwCount>7?nowMwCount=7:true;
             this.movieCurrent=nowMwCount;
+            let aa=this.movieMsg[this.movieCurrent];
+            this.$store.commit('moiveMsg',[aa[0],aa[1],aa[2],this.movieCurrent]);
         },
         moveConfirm(){
             let mw=1.294*this.$refs.MIW.offsetWidth;
-            this.movieCurrent>0?movieLeft.scrollLeft=this.movieCurrent*mw:movieLeft.scrollLeft=0   
+            this.movieCurrent>0?movieLeft.scrollLeft=this.movieCurrent*mw:movieLeft.scrollLeft=0;
+            let aa=this.movieMsg[this.movieCurrent];
+            this.$store.commit('moiveMsg',[aa[0],aa[1],aa[2],this.movieCurrent]);   
         },
         choicePic(i){
             this.moiveCurrent=i;
             // this.$options.methods.moveConfirm();此处不适合复用
             let mw=1.294*this.$refs.MIW.offsetWidth;
             i>0?movieLeft.scrollLeft=i*mw:movieLeft.scrollLeft=0
+            let aa=this.movieMsg[this.movieCurrent];
+            this.$store.commit('moiveMsg',[aa[0],aa[1],aa[2],this.movieCurrent]);
         },
         buy(msg){
             this.$store.commit('choiceTime',msg);

@@ -14,7 +14,8 @@ const state={
     choiceMoive:['红海行动','9.3','138分钟 | 动作 | 张译 黄景瑜 海清',0],
     moiveMsg:'',
     choiceTime:'',
-    choiceSeat:[]
+    choiceSeat:[],
+    seatList:[]
 };
 const mutations={
     currentTab(state,n){
@@ -59,7 +60,10 @@ const mutations={
     },
     unchoiceSeat(state,n){
         state.choiceSeat.splice(n,1)
-    }
+    },
+    addPiao(state,n){
+        state.accountMsg['piao']=n
+    },
 };
 
 let store=new Vuex.Store({

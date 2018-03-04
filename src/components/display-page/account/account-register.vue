@@ -8,6 +8,7 @@
                 <mt-field label="密码" type="password" placeholder="请输入密码" v-model="upwd"></mt-field>
                 <mt-field label="确认密码" type="password" placeholder="请再次输入密码" v-model="upwd2"></mt-field>
                 <mt-field label="昵称" placeholder="请输入昵称" v-model="user_name"></mt-field>
+                <mt-field label="手机" placeholder="请输入手机号码" v-model="phone"></mt-field>
             </div>
             <div class="login account-button" @click="register">注 册</div>
         </div>
@@ -40,7 +41,7 @@ export default {
                 text: '加载钟...',
                 spinnerType: 'fading-circle'
             }),
-            this.$http.post('http://localhost/php/register.php',{uname:this.uname,upwd:this.upwd,user_name:this.user_name},{credentials: true,emulateJSON: true})
+            this.$http.post('http://localhost/php/register.php',{uname:this.uname,upwd:this.upwd,user_name:this.user_name,phone:this.phone},{credentials: true,emulateJSON: true})
             .then(function(res){
                 setTimeout(() => {  
                     Indicator.close();   
@@ -62,7 +63,8 @@ export default {
             uname:'',
             upwd:'',
             upwd2:'',
-            user_name:''
+            user_name:'',
+            phone:''
         }
     }
 }

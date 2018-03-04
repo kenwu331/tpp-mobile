@@ -11,7 +11,7 @@
 			"select * from tpp_user where uname='$uname'";
 		$result=mysqli_query($conn,$sql);
 		$user=mysqli_fetch_row($result);
-		echo json_encode(Array("uid"=>$user[0],"uname"=>$user[1],"upwd"=>$user[2],"user_name"=>$user[3]));
+		echo json_encode(Array("uid"=>$user[0],"uname"=>$user[1],"upwd"=>$user[2],"user_name"=>$user[3],'phone'=>$user[4],'piao'=>$user[5]));
 	}else{
 		echo json_encode(Array("uname"=>""));
 	}

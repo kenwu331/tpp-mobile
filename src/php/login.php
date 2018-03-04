@@ -17,7 +17,7 @@
 			session_start();//打开session
 			$_SESSION["uname"]=$user[1];
 			
-			echo json_encode(Array("uid"=>$user[0],"uname"=>$user[1],"upwd"=>$user[2],"user_name"=>$user[3]));
+			echo json_encode(Array("uid"=>$user[0],"uname"=>$user[1],"upwd"=>$user[2],"user_name"=>$user[3],'phone'=>$user[4],'piao'=>$user[5]));
 		}else//否则
 			echo json_encode(Array("uname"=>""));//登录失败
 	}

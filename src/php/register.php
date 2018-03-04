@@ -6,7 +6,8 @@
     mysqli_query($conn,$sql);
 	@$uname=$_REQUEST["uname"];
     @$upwd=$_REQUEST["upwd"];
-    @$user_name=$_REQUEST["user_name"];
+	@$user_name=$_REQUEST["user_name"];
+	@$phone=$_REQUEST["phone"];
 	if($uname){
 		$sql="select * from tpp_user where uname='$uname'";
 		$result=mysqli_query($conn,$sql);
@@ -14,11 +15,11 @@
 		if(count($user)!=0){//如果有结果
 			echo json_encode(Array("uname"=>"用户已存在"));
 		}else{//否则
-            $sql="INSERT INTO tpp_user VALUES(NULL,'$uname','$upwd','$user_name');";
+            $sql="INSERT INTO tpp_user VALUES(NULL,'$uname','$upwd','$user_name','$phone','[]');";
 			mysqli_query($conn,$sql);
 			session_start();//打开session
 			$_SESSION["uname"]=$uname;
-            echo json_encode(Array("uname"=>$uname,"upwd"=>$upwd,"user_name"=>$user_name));
+            echo json_encode(Array("uname"=>$uname,"upwd"=>$upwd,"user_name"=>$user_name,'phone'=>$phone,'piao'=>[]));
         }
 	}
 

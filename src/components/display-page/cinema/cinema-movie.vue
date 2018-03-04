@@ -27,57 +27,112 @@
                     <div class="seat-main">
                         <div class="row-icon" :key="index" v-for="(val,index) in icon">
                             <div :key="index3" v-for="(val3,index3) in val"><div class="seat-icon-empty" v-if="val3==0"></div></div>
-                            <div :key="index2+100" v-for="(val2,index2) in val" @click="iconClick(index,val2,index2)"><div class="seat-icon" :class="{'icon-selected':val2!=parseInt(val2)}" v-if="val2!=0"><div :class="{'icon-selected':val2!=parseInt(val2)}">{{parseInt(val2)}}</div></div></div>
+                            <div :key="index2+100" v-for="(val2,index2) in val" @click="iconClick(index,val2,index2)"><div class="seat-icon" :class="[val2==parseInt(val2)+'已售' ? 'icon-sold' : val2==parseInt(val2)+'已选'?'icon-selected':'']"  v-if="val2!=0"><div :class="[val2==parseInt(val2)+'已售' ? 'icon-sold' : val2==parseInt(val2)+'已选'?'icon-selected':'']">{{parseInt(val2)}}</div></div></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <mt-button size="large" type="danger" class="seat-confirm">确认选座</mt-button>
+        <mt-button size="large" type="danger" class="seat-confirm" @click="msgg">确认选座</mt-button>
         <div class="seat-price">
             <div class="phone">
                 <p class="phone-msg">购票成功后将发送取票码到</p>
                 <p class="phone-num">15820258055</p>
             </div>
             <div class="price">
-                <p>票价 <span>35.9元</span></p>
+                <p>票价 <span>{{$store.state.choiceTime[3]*$store.state.choiceSeat.length || '0'}}元</span></p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { MessageBox } from 'mint-ui';
 export default {
     mounted(){
-            this.aaa();
+            this.vww();
+            let vuex=this.$store.state.choiceSeat;
+            if(vuex.length){
+                for(var i=0;i<vuex.length;i++){
+                    let a=vuex[i][0],b=vuex[i][1],c=vuex[i][2];
+                    this.icon[a].splice(c,1,b+"已选");
+                }
+            }
         },
     methods:{
-        aaa(){
+        vww(){
             let vww=this.$refs.vw.offsetWidth;          
             sv.scrollLeft=0.5*vww; 
         },
         iconClick(msg,msg2,msg3){
-            let arr=[msg,parseInt(msg2)];
-            var _this=this;
-            _this.ik=arr;
-            let vuex=this.$store.state.choiceSeat;
-            if(vuex.length==0){
-                _this.$store.commit('choiceSeat',_this.ik);
-                _this.icon[msg].splice(msg3, 1,msg2+"已选");
-            }else{
-                for(var i=0;i<vuex.length;i++){
-                    if(i==(vuex.length-1) && _this.ik.join(';')!=vuex[i].join(';')){
-                        _this.$store.commit('choiceSeat',_this.ik);
-                        _this.icon[msg].splice(msg3, 1,msg2+"已选");
-                        break;
-                    }
-                    if(_this.ik.join(';')==vuex[i].join(';')){
-                        _this.$store.commit('unchoiceSeat',i);
-                        _this.icon[msg].splice(msg3, 1,parseInt(msg2));
-                        break;
+            if(msg2!=parseInt(msg2)+'已售'){
+                let arr=[msg,parseInt(msg2),msg3];
+                var _this=this;
+                _this.ik=arr;
+                let vuex=this.$store.state.choiceSeat;
+                if(vuex.length==0){
+                    _this.$store.commit('choiceSeat',_this.ik);
+                    _this.icon[msg].splice(msg3, 1,msg2+"已选");
+                }else{
+                    for(var i=0;i<vuex.length;i++){
+                        if(i==(vuex.length-1) && _this.ik.join(';')!=vuex[i].join(';')){
+                            _this.$store.commit('choiceSeat',_this.ik);
+                            _this.icon[msg].splice(msg3, 1,msg2+"已选");
+                            break;
+                        }
+                        if(_this.ik.join(';')==vuex[i].join(';')){
+                            _this.$store.commit('unchoiceSeat',i);
+                            _this.icon[msg].splice(msg3, 1,parseInt(msg2));
+                            break;
+                        }
                     }
                 }
             }
+        },
+        msgg(){
+            let ct=this.$store.state.choiceTime,cm=this.$store.state.choiceMoive,cc=this.$store.state.choiceCinema,cs=this.$store.state.choiceSeat;
+            MessageBox.confirm('完成选座?').then(action => {
+                let msg=''+cm[0]+' '+ct[0]+' '+ct[2];
+                if(cs.length){
+                    for(var i=0;i<cs.length;i++){
+                        msg+='<br/>'+(cs[i][0]+1)+'行'+cs[i][1]+'座';
+                    }
+                    MessageBox.confirm(msg,'选购信息').then(action => {
+                            let arr=this.icon;
+                            for(var i=0;i<cs.length;i++){
+                                let a=cs[i][0],b=cs[i][1],c=cs[i][2];
+                                arr[a].splice(c,1,b+"已售");
+                            }
+                             let bbb=JSON.parse(this.$store.state.accountMsg['piao']);
+                             bbb[bbb.length]=[cm[0],ct[0],cs];
+                            
+                            //console.log('asd',JSON.parse(this.$store.state.accountMsg['piao']).length,bbb);
+                            let arrpiao=JSON.stringify(bbb);
+                            let arrjson=JSON.stringify(arr);
+                            this.$http.post('http://localhost/php/buy.php',{arr:arrjson,mn:cm[0],mt:ct[0],piao:arrpiao},{credentials: true,emulateJSON: true})
+                            .then(function(res){
+                                console.log(res.data)
+                                if(res.data['msg']=='ok'){
+                                    this.$store.commit('addPiao',arrpiao);
+                                }
+                                this.$router.push('/main')
+                                // console.log(JSON.parse(JSON.stringify(res)))
+                                // console.log(res)
+                                // console.log(JSON.parse(JSON.stringify(res.data['uname'])))
+                                // let aa=res.data['uname'][0];
+                                // let obj=eval("("+aa+")");
+                                // console.log(eval("("+aa+")"))
+                            })
+                    });
+                }else{
+                    MessageBox('温馨提示', '您还未选座~');
+                }
+                // console.log('choiceTime',this.$store.state.choiceTime);
+                // console.log('choiceMoive',this.$store.state.choiceMoive);
+                // console.log('choiceCinema',this.$store.state.choiceCinema);
+                // console.log('choiceSeat',this.$store.state.choiceSeat);
+            });
+            
         }
     },
     data:function(){
@@ -85,7 +140,29 @@ export default {
             icon:[[0,0,1,2,3,4,5,6],[0,1,2,3,4,5,6,7],[0,1,2,3,4,5,6,7],[0,1,2,3,4,5,6,7],[1,2,3,4,5,6,7,8]],
             ik:[],
             is:[],
-            rowNum:[1,2,3,4,5]
+            rowNum:[1,2,3,4,5],
+            piao:[123,2],
+            buy:[]
+        }
+    },
+    created(){
+        if(!this.$store.state.isLogin){
+            this.$http.post('http://localhost/php/islogin.php',{uname:"asd",upwd:"dsa"},{ credentials: true,emulateJSON: true })
+            .then(function(res){
+                if(res.data["uname"]==''){
+                this.$router.push('/account/');
+                }else{
+                this.$store.commit('isLogin',true)
+                this.$store.commit('accountMsg',res.data)
+                this.$router.push('/main')
+                }
+            })
+        }else{
+            this.$http.post('http://localhost/php/selectseat.php',{mn:this.$store.state.choiceMoive[0],mt:this.$store.state.choiceTime[0]},{credentials: true,emulateJSON: true})
+            .then(function(res){
+                console.log(JSON.parse(res.data['uname']))
+                this.icon=JSON.parse(res.data['uname'])
+            })
         }
     }
     
@@ -231,6 +308,10 @@ export default {
     }
     .seat .seat-state .seat-view .row-icon .icon-selected{
         background:#70C972;
+        color:#fff;
+    }
+    .seat .seat-state .seat-view .row-icon .icon-sold{
+        background:#F44336;
         color:#fff;
     }
     .seat-confirm{
