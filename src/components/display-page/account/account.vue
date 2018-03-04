@@ -12,7 +12,6 @@ export default {
       text: '加载钟...',
       spinnerType: 'double-bounce'
     });
-    var _this=this;
     this.$store.commit('currentTab',2);
     if(this.$store.state.isLogin==true){
       console.log(this.$store.state.accountMsg)
@@ -21,18 +20,18 @@ export default {
                 Indicator.close();   
             }, 500);     
     }else{
-      this.$http.post('http://localhost/php/islogin.php',{uname:"asd",upwd:"dsa"},{ credentials: true,emulateJSON: true })
+      this.$http.post('http://www.wuhaijun.com.cn/php/islogin.php',{uname:"asd",upwd:"dsa"},{ credentials: true,emulateJSON: true })
       .then(function(res){
         if(res.data["uname"]==''){
-          _this.$router.push('/account/');
+          this.$router.push('/account/');
           setTimeout(() => {  
                 Indicator.close();   
             }, 500); 
         }else{
           console.log(res)
-          _this.$store.commit('isLogin',true)
-          _this.$store.commit('accountMsg',res.data)
-          _this.$router.push('/account/listed')
+          this.$store.commit('isLogin',true)
+          this.$store.commit('accountMsg',res.data)
+          this.$router.push('/account/listed')
           setTimeout(() => {  
                 Indicator.close();   
             }, 500); 

@@ -31,31 +31,30 @@ export default {
             });
         },
         register(){
-            var _this=this;
             this.uname==''?this.instance("用户名不能为空"):
             this.upwd==''?this.instance("密码不能为空"):
             this.upwd2==''?this.instance("确认密码不能为空"):
             this.upwd!=this.upwd2?this.instance("两次密码必须一致"):
             this.user_name==''?this.instance("昵称不能为空"):
-            Indicator.open({
+            (Indicator.open({
                 text: '加载钟...',
                 spinnerType: 'fading-circle'
             }),
-            this.$http.post('http://localhost/php/register.php',{uname:this.uname,upwd:this.upwd,user_name:this.user_name,phone:this.phone},{credentials: true,emulateJSON: true})
+            this.$http.post('http://www.wuhaijun.com.cn/php/register.php',{uname:this.uname,upwd:this.upwd,user_name:this.user_name,phone:this.phone},{credentials: true,emulateJSON: true})
             .then(function(res){
                 setTimeout(() => {  
                     Indicator.close();   
                 }, 100);
                 if(res.data['uname']!="用户已存在"){
-                    _this.instance("注册成功")
-                    _this.$store.commit('accountMsg',res.data)
-                    _this.$store.commit('isLogin',true)
-                    _this.$store.commit('registerState')
-                    _this.$router.push('/account/listed')
+                    this.instance("注册成功")
+                    this.$store.commit('accountMsg',res.data)
+                    this.$store.commit('isLogin',true)
+                    this.$store.commit('registerState')
+                    this.$router.push('/account/listed')
                 }else{
-                    _this.instance("用户已存在")
+                    this.instance("用户已存在")
                 }
-            })
+            }))
         }
     },
     data:function(){
@@ -99,7 +98,7 @@ export default {
         border: 1px solid #ff5000;
     }
     .account .login{
-        background:linear-gradient(left,#ff9000,#ff5000) no-repeat;
+        background:linear-gradient(left,#ff9000,#ff5000);
         color:#fff;
     }
     .account .register{

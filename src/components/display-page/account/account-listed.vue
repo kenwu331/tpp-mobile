@@ -33,7 +33,7 @@ export default {
                     spinnerType: 'fading-circle'
                 });
                 var _this=this;
-                this.$http.post('http://localhost/php/checkout.php',{uname:"asd",upwd:"dsa"},{ credentials: true,emulateJSON: true }).then(function(res){
+                this.$http.post('http://www.wuhaijun.com.cn/php/checkout.php',{uname:"asd",upwd:"dsa"},{ credentials: true,emulateJSON: true }).then(function(res){
                     setTimeout(() => {  
                         Indicator.close();   
                     }, 100);

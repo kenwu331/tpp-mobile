@@ -109,7 +109,7 @@ export default {
                             //console.log('asd',JSON.parse(this.$store.state.accountMsg['piao']).length,bbb);
                             let arrpiao=JSON.stringify(bbb);
                             let arrjson=JSON.stringify(arr);
-                            this.$http.post('http://localhost/php/buy.php',{arr:arrjson,mn:cm[0],mt:ct[0],piao:arrpiao},{credentials: true,emulateJSON: true})
+                            this.$http.post('http://www.wuhaijun.com.cn/php/buy.php',{arr:arrjson,mn:cm[0],mt:ct[0],piao:arrpiao},{credentials: true,emulateJSON: true})
                             .then(function(res){
                                 console.log(res.data)
                                 if(res.data['msg']=='ok'){
@@ -147,7 +147,7 @@ export default {
     },
     created(){
         if(!this.$store.state.isLogin){
-            this.$http.post('http://localhost/php/islogin.php',{uname:"asd",upwd:"dsa"},{ credentials: true,emulateJSON: true })
+            this.$http.post('http://www.wuhaijun.com.cn/php/islogin.php',{uname:"asd",upwd:"dsa"},{ credentials: true,emulateJSON: true })
             .then(function(res){
                 if(res.data["uname"]==''){
                 this.$router.push('/account/');
@@ -158,7 +158,7 @@ export default {
                 }
             })
         }else{
-            this.$http.post('http://localhost/php/selectseat.php',{mn:this.$store.state.choiceMoive[0],mt:this.$store.state.choiceTime[0]},{credentials: true,emulateJSON: true})
+            this.$http.post('http://www.wuhaijun.com.cn/php/selectseat.php',{mn:this.$store.state.choiceMoive[0],mt:this.$store.state.choiceTime[0]},{credentials: true,emulateJSON: true})
             .then(function(res){
                 console.log(JSON.parse(res.data['uname']))
                 this.icon=JSON.parse(res.data['uname'])

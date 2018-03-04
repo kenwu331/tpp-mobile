@@ -40,7 +40,7 @@ export default {
                     text: '加载钟...',
                     spinnerType: 'fading-circle'
                 });
-                this.$http.post('http://localhost/php/login.php',{uname:this.uname,upwd:this.upwd},{credentials: true,emulateJSON: true}).then(function(res){
+                this.$http.post('http://www.wuhaijun.com.cn/php/login.php',{uname:this.uname,upwd:this.upwd},{credentials: true,emulateJSON: true}).then(function(res){
                     setTimeout(() => {  
                         Indicator.close();   
                     }, 100); 
@@ -99,7 +99,7 @@ export default {
         border: 1px solid #ff5000;
     }
     .account .login{
-        background:linear-gradient(left,#ff9000,#ff5000) no-repeat;
+        background:linear-gradient(45deg,#ff9000,#ff5000);
         color:#fff;
     }
     .account .register{
